@@ -39,13 +39,16 @@ namespace RazorPagesMovie.Pages.Movies
             var movies = from m in _context.Movie
                          select m;
 
-            // Filter by search string
+            // Enhanced Filter by search string (Update 3)
             if (!string.IsNullOrEmpty(SearchString))
             {
-                movies = movies.Where(s => s.Title.Contains(SearchString));
+                movies = movies.Where(s => s.Title.Contains(SearchString) ||
+                                         s.Director.Contains(SearchString) ||
+                                         s.ReleaseCountry.Contains(SearchString) ||
+                                         s.Genre.Contains(SearchString));
             }
 
-            // Filter by genre
+            // Filter by genre (existing functionality)
             if (!string.IsNullOrEmpty(MovieGenre))
             {
                 movies = movies.Where(x => x.Genre == MovieGenre);
